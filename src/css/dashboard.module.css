@@ -1,0 +1,99 @@
+.dashboardContainer {
+    min-height: 100%;
+}
+
+.searchCard {
+    position: sticky;
+    top: 0.75rem;
+    z-index: 3;
+}
+
+.searchForm {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+}
+
+.suggestions {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.companyGrid {
+    align-items: start;
+}
+
+.metricCard {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.label {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.metricValue {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.analystLayout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.pieChart {
+    width: 220px;
+    height: 220px;
+    position: relative;
+}
+
+.pieChart canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.analystLegend {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.legendRow {
+    display: grid;
+    grid-template-columns: 12px 1fr auto;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.legendSwatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legendLabel {
+    font-weight: 500;
+}
+
+.legendValue {
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767.98px) {
+    .searchCard {
+        position: static;
+    }
+
+    .searchForm {
+        grid-template-columns: 1fr;
+    }
+
+    .analystLayout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: left;
+    }
+}
