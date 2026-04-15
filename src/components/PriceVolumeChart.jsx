@@ -252,7 +252,13 @@ const PriceVolumeChart = ({ symbol, className = '' }) => {
       <h5 className="mb-3">30-Day Price & Volume</h5>
       <div className="card shadow-sm">
         <div className="card-body">
-          {isLoading && <p className="text-muted mb-0">Loading 30-day historical data...</p>}
+          {isLoading && (
+            <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '340px' }}>
+              <div className="spinner-border text-primary" role="status" aria-label="Loading 30-day historical data">
+                <span className="visually-hidden">Loading 30-day historical data...</span>
+              </div>
+            </div>
+          )}
           {!isLoading && error && (
             <div className="alert alert-danger mb-0" role="alert">
               {error}

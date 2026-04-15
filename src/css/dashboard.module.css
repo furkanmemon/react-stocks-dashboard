@@ -1,11 +1,15 @@
 .dashboardContainer {
     min-height: 100%;
+    position: relative;
+    overflow: visible;
 }
 
 .searchCard {
     position: sticky;
-    top: 0.75rem;
-    z-index: 3;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+    width: 100%;
 }
 
 .searchForm {
@@ -83,10 +87,6 @@
 }
 
 @media (max-width: 767.98px) {
-    .searchCard {
-        position: static;
-    }
-
     .searchForm {
         grid-template-columns: 1fr;
     }

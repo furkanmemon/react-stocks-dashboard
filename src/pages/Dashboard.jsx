@@ -93,10 +93,11 @@ const Dashboard = () => {
     const { quote } = snapshot
     return [
       { label: 'Current Price', value: formatCurrency(quote.c) },
-      { label: 'Change', value: formatCurrency(quote.d) },
+      { label: 'Change', value: formatCurrency(quote.d), positive: Number(quote.d) < 0 ? false : true },
       {
         label: 'Change %',
         value: quote.dp === null || quote.dp === undefined ? '-' : formatPercent(quote.dp / 100),
+        positive: Number(quote.d) < 0 ? false : true
       },
       { label: 'Day High', value: formatCurrency(quote.h) },
       { label: 'Day Low', value: formatCurrency(quote.l) },
@@ -189,16 +190,27 @@ const Dashboard = () => {
               aria-label="Stock search input"
             />
             <button className="btn btn-primary" type="submit" disabled={isLoading}>
-              {isLoading ? 'Loading...' : 'Load'}
+              {isLoading ? (
+                <span className="d-flex align-items-center justify-content-center gap-2">
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                  <span>Loading</span>
+                </span>
+              ) : (
+                'Load'
+              )}
             </button>
           </form>
 
           {showSuggestions && suggestionsLoading && (
-            <p className="text-muted mt-2 mb-0">Searching symbols...</p>
+            <div className={`list-group list-group-item list-group-item-action d-flex justify-content-center pl-5 ${styles.suggestions}`} style={{ minHeight: '25px' }}>
+              <div className="spinner-border pl-5 spinner-border-sm text-primary ml-2" role="status" aria-label="Searching symbols">
+                <span className="visually-hidden">Searching symbols...</span>
+              </div>
+            </div>
           )}
 
-          {showSuggestions && suggestions.length > 0 && (
-            <div className={`list-group mt-2 ${styles.suggestions}`}>
+          {showSuggestions && (suggestions.length > 0) && !suggestionsLoading && (
+            <div className={`list-group mt-1 ${styles.suggestions}`}>
               {suggestions.map((item) => (
                 <button
                   type="button"
@@ -259,7 +271,22 @@ const Dashboard = () => {
           <section className="mb-4">
             <h5 className="mb-3">Price Snapshot</h5>
             <div className="row g-3">
-              {quoteCards.map((item) => (
+              {quoteCards.map((item) => {
+                if (item.label === 'Change' || item.label === 'Change %') {
+                  return (
+                    <div className="col-sm-6 col-xl-3" key={item.label}>
+                      <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
+                        <div className="card-body">
+                          <div className={styles.label}>{item.label}</div>
+                          <div className={`${item.positive ? 'text-success' : 'text-danger'} ${styles.metricValue}`}>
+                            { item.value }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                return (
                 <div className="col-sm-6 col-xl-3" key={item.label}>
                   <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
                     <div className="card-body">
@@ -268,7 +295,8 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
           </section>
 
