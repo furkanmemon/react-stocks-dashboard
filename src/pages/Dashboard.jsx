@@ -168,6 +168,9 @@ const Dashboard = () => {
 
   return (
     <div className={`container-fluid py-4 ${styles.dashboardContainer}`}>
+      <div className="alert alert-warning text-center">
+        We can only search for stocks from the USA or UK due to API limitations
+      </div>
       <div className={`card shadow-sm ${styles.searchCard}`}>
         <div className="card-body">
           <h5 className="card-title mb-3">Stock Search</h5>
@@ -268,54 +271,6 @@ const Dashboard = () => {
 
           <PriceVolumeChart symbol={selectedSymbol} className="mb-4" />
 
-          <section className="mb-4">
-            <h5 className="mb-3">Price Snapshot</h5>
-            <div className="row g-3">
-              {quoteCards.map((item) => {
-                if (item.label === 'Change' || item.label === 'Change %') {
-                  return (
-                    <div className="col-sm-6 col-xl-3" key={item.label}>
-                      <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
-                        <div className="card-body">
-                          <div className={styles.label}>{item.label}</div>
-                          <div className={`${item.positive ? 'text-success' : 'text-danger'} ${styles.metricValue}`}>
-                            { item.value }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
-                return (
-                <div className="col-sm-6 col-xl-3" key={item.label}>
-                  <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
-                    <div className="card-body">
-                      <div className={styles.label}>{item.label}</div>
-                      <div className={styles.metricValue}>{item.value}</div>
-                    </div>
-                  </div>
-                </div>
-                )
-              })}
-            </div>
-          </section>
-
-          <section>
-            <h5 className="mb-3">Fundamentals</h5>
-            <div className="row g-3">
-              {metricCards.map((item) => (
-                <div className="col-sm-6 col-xl-3" key={item.label}>
-                  <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
-                    <div className="card-body">
-                      <div className={styles.label}>{item.label}</div>
-                      <div className={styles.metricValue}>{item.value}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
           <section className="mb-4 mt-4">
             <div className="card shadow-sm">
               <div className="card-body">
@@ -357,6 +312,63 @@ const Dashboard = () => {
               </div>
             </div>
           </section>
+
+          <section className="mb-4">
+            <h5 className="mb-3">Price Snapshot</h5>
+            <div className="row g-3">
+              {quoteCards.map((item) => {
+                if (item.label === 'Change' || item.label === 'Change %') {
+                  return (
+                    <div className="col-sm-6 col-xl-3" key={item.label}>
+                      <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
+                        <div className="card-body">
+                          <div className={styles.label}>{item.label}</div>
+                          <div className={`${item.positive ? 'text-success' : 'text-danger'} ${styles.metricValue}`}>
+                            { item.value }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                return (
+                <div className="col-sm-6 col-xl-3" key={item.label}>
+                  <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
+                    <div className="card-body">
+                      <div className={styles.label}>{item.label}</div>
+                      { (item.label === 'Day High') || (item.label === 'Day Low') ? 
+                      (<div className={`${item.label==='Day High' ? 'text-success' : 'text-danger'} ${styles.metricValue}`}>
+                        {item.value}
+                      </div>) : 
+                      (<div className={styles.metricValue}>{item.value}</div>) }
+                    </div>
+                  </div>
+                </div>
+                )
+              })}
+            </div>
+          </section>
+
+          <section>
+            <h5 className="mb-3">Fundamentals</h5>
+            <div className="row g-3">
+              {metricCards.map((item) => (
+                <div className="col-sm-6 col-xl-3" key={item.label}>
+                  <div className={`card h-100 shadow-sm ${styles.metricCard}`}>
+                    <div className="card-body">
+                      <div className={styles.label}>{item.label}</div>
+                      { (item.label === '52W High' || item.label === '52W Low') ?
+                      (<div className={`${item.label==='52W High' ? 'text-success' : 'text-danger'} ${styles.metricValue}`}>
+                        {item.value}
+                      </div>) : 
+                      (<div className={styles.metricValue}>{item.value}</div>) }
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
         </>
       )}
     </div>
