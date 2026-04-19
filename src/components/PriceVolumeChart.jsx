@@ -129,6 +129,7 @@ const PriceVolumeChart = ({ symbol, className = '' }) => {
   }, [symbol])
 
   const chartPayload = useMemo(() => {
+    setIsLoading(true)
     if (!Array.isArray(chartData) || chartData.length === 0) {
       return null
     }
@@ -146,10 +147,12 @@ const PriceVolumeChart = ({ symbol, className = '' }) => {
     })
     const closes = chartData.map((item) => item.close)
     const volumes = chartData.map((item) => item.volume)
+    setIsLoading(false)
     return { labels, rawDates, readableDates, closes, volumes }
   }, [chartData])
 
   useEffect(() => {
+    setIsLoading(true)
     if (chartRef.current) {
       chartRef.current.destroy()
       chartRef.current = null
@@ -211,6 +214,7 @@ const PriceVolumeChart = ({ symbol, className = '' }) => {
           x: {
             ticks: {
               maxTicksLimit: 8,
+              display: !(window.innerWidth < 600)
             },
             grid: {
               display: false,
@@ -218,27 +222,33 @@ const PriceVolumeChart = ({ symbol, className = '' }) => {
           },
           yPrice: {
             type: 'linear',
+            ticks: {
+              display: !(window.innerWidth < 600)
+            },
             position: 'left',
             title: {
-              display: true,
+              display: !(window.innerWidth < 600),
               text: 'Price (USD)',
             },
           },
           yVolume: {
             type: 'linear',
             position: 'right',
+            ticks: {
+              display: !(window.innerWidth < 600)
+            },
             grid: {
               drawOnChartArea: false,
             },
             title: {
-              display: true,
+              display: !(window.innerWidth < 600),
               text: 'Volume',
             },
           },
         },
       },
     })
-
+    setIsLoading(false)
     return () => {
       if (chartRef.current) {
         chartRef.current.destroy()

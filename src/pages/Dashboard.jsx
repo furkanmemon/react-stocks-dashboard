@@ -230,7 +230,9 @@ const Dashboard = () => {
       </div>
 
       <div className="d-flex align-items-center justify-content-between mt-4 mb-3">
-        <h4 className="mb-0">Symbol: {selectedSymbol}</h4>
+        <h4 className="mb-0">
+        {/* Symbol: {selectedSymbol} */}
+        </h4>
       </div>
 
       {error && (
