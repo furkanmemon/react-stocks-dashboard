@@ -32,6 +32,7 @@ const Dashboard = () => {
   const [error, setError] = useState('')
 
   const loadSymbol = async (symbol, options = {}) => {
+    console.log('load symbol called -----------')
     const { closeSuggestions = true } = options
     const normalizedSymbol = symbol.trim().toUpperCase()
     if (!normalizedSymbol) return
@@ -192,7 +193,7 @@ const Dashboard = () => {
               }}
               aria-label="Stock search input"
             />
-            <button className="btn btn-primary" type="submit" disabled={isLoading}>
+             {/* <button className="btn btn-primary" type="submit" disabled={isLoading}>
               {isLoading ? (
                 <span className="d-flex align-items-center justify-content-center gap-2">
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
@@ -201,7 +202,7 @@ const Dashboard = () => {
               ) : (
                 'Load'
               )}
-            </button>
+            </button> */}
           </form>
 
           {showSuggestions && suggestionsLoading && (
@@ -241,7 +242,16 @@ const Dashboard = () => {
         </div>
       )}
 
-      {snapshot && (
+      {
+        isLoading && (
+          <div className="d-flex flex-column justify-content-center align-items-center p-5">
+            <span className="spinner-border spinner-border-md text-primary"></span>
+            <div className="col-12 text-center">Loading</div>
+          </div>
+        )
+      }
+
+      {snapshot && !isLoading && (
         <>
           <div className="card shadow-sm mb-4">
             <div className="card-body">
